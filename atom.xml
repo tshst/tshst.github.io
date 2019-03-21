@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://tshst.github.io/"/>
-  <updated>2019-03-21T10:53:37.288Z</updated>
+  <updated>2019-03-21T16:07:36.036Z</updated>
   <id>https://tshst.github.io/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>ブログ環境構築</title>
+    <link href="https://tshst.github.io/2019/03/22/%E3%83%96%E3%83%AD%E3%82%B0%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89/"/>
+    <id>https://tshst.github.io/2019/03/22/ブログ環境構築/</id>
+    <published>2019-03-21T15:54:20.000Z</published>
+    <updated>2019-03-21T16:07:36.036Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="リサーチ"><a href="#リサーチ" class="headerlink" title="リサーチ"></a>リサーチ</h2><ul><li>無料のブログサービス(wordpress, tumblr, Blogger, etc…)</li><li>静的ジェネレータ(Pelican, hugo, hexo)</li><li>なんだかんだで静的ジェネレータが記事を書くうえでも、Markdownなので便利</li></ul><h2 id="はじめは、HUGO"><a href="#はじめは、HUGO" class="headerlink" title="はじめは、HUGO"></a>はじめは、HUGO</h2><ul><li>Go製で高速</li><li>テーマも好きなものがあった</li><li>ただ、設定のカスタマイズがものすごくわかりずらく、断念</li></ul><h2 id="最終的にHEXO"><a href="#最終的にHEXO" class="headerlink" title="最終的にHEXO"></a>最終的にHEXO</h2><ul><li>設定が簡単で理解しやすい</li></ul><h2 id="毎日何かアウトプットする"><a href="#毎日何かアウトプットする" class="headerlink" title="毎日何かアウトプットする"></a>毎日何かアウトプットする</h2><ul><li>3日坊主にならないようにする</li><li>可能な限り技術ネタ</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;リサーチ&quot;&gt;&lt;a href=&quot;#リサーチ&quot; class=&quot;headerlink&quot; title=&quot;リサーチ&quot;&gt;&lt;/a&gt;リサーチ&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;無料のブログサービス(wordpress, tumblr, Blogger, etc…)&lt;/li&gt;
+&lt;li&gt;静的
+      
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="https://tshst.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hello World</title>
     <link href="https://tshst.github.io/2019/03/21/hello-world/"/>
     <id>https://tshst.github.io/2019/03/21/hello-world/</id>
-    <published>2019-03-21T10:53:37.288Z</published>
-    <updated>2019-03-21T10:53:37.288Z</updated>
+    <published>2019-03-21T13:45:06.528Z</published>
+    <updated>2019-03-21T13:45:06.528Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
     
