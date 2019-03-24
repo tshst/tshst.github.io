@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://tshst.github.io/"/>
-  <updated>2019-03-21T16:07:36.036Z</updated>
+  <updated>2019-03-24T06:09:24.990Z</updated>
   <id>https://tshst.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AWSのVPNでBGPがうまく反映されない</title>
+    <link href="https://tshst.github.io/2019/03/24/AWS001/"/>
+    <id>https://tshst.github.io/2019/03/24/AWS001/</id>
+    <published>2019-03-24T01:50:50.000Z</published>
+    <updated>2019-03-24T06:09:24.990Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="ネットワークの構成-簡略"><a href="#ネットワークの構成-簡略" class="headerlink" title="ネットワークの構成(簡略)"></a>ネットワークの構成(簡略)</h2><ul><li>拠点が2箇所あり、拠点にはルーターとして、RTX1210がある</li><li>AWSは東京リージョンとバージニアリージョンの2箇所を使用している</li><li>各拠点からsite-to-siteのVPNで各リージョンに接続している</li><li>Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している</li></ul><img src="/2019/03/24/AWS001/aws-vpn-network-diagram.png" title="構成図"><h2 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h2><ul><li>各拠点からVPNで各リージョンに接続したいと考えているが問題が発生している</li><li>東京リージョンのインスタンスからa.a.a.a/24に対して疎通できない</li></ul><h2 id="切り分け"><a href="#切り分け" class="headerlink" title="切り分け"></a>切り分け</h2><ul><li>バージニアリージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはA.A.A.Aとなり、問題なく到達する</li><li>バージニアリージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する</li><li>東京リージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはC.C.C.Cとなる</li><li>東京リージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する</li><li>YAMAHA側でBGPのステータスを確認したところ、正常</li></ul><h3 id="BGPのルーティングに絞ってリサーチ"><a href="#BGPのルーティングに絞ってリサーチ" class="headerlink" title="BGPのルーティングに絞ってリサーチ"></a>BGPのルーティングに絞ってリサーチ</h3><ul><li>上記からおそらくVGWのルーティングに問題がある</li><li>しかし、VGWのルーティング情報は参照できない。。。</li></ul><h2 id="BGP周りの情報"><a href="#BGP周りの情報" class="headerlink" title="BGP周りの情報"></a>BGP周りの情報</h2><ul><li><a href="https://dev.classmethod.jp/cloud/aws/add-vpc-cidr-with-vpn/" target="_blank" rel="noopener">同じネットワークの場合、マスクの大きさによってルーティングに影響がでる</a></li><li><a href="https://www.slideshare.net/skikuchi/akibaaws-vpn" target="_blank" rel="noopener">AWSでｎVPNを構築する際の考え方等</a></li><li><a href="https://www.slideshare.net/skikuchi/akibaaws-vgw" target="_blank" rel="noopener">VGWのルーティング情報に関する話</a></li></ul><h2 id="対応"><a href="#対応" class="headerlink" title="対応"></a>対応</h2><ul><li>とりあえず、切り分けとして、VGWを作り直して見た</li><li>作り直したところ、問題なく繋がるようになった</li><li>こうなると再現性がないので、原因特定が難しい</li><li>再発したら、AWSに問い合わせて調査してもらうようにしよう</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;ネットワークの構成-簡略&quot;&gt;&lt;a href=&quot;#ネットワークの構成-簡略&quot; class=&quot;headerlink&quot; title=&quot;ネットワークの構成(簡略)&quot;&gt;&lt;/a&gt;ネットワークの構成(簡略)&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;拠点が2箇所あり、拠点にはルーターとして、R
+      
+    
+    </summary>
+    
+    
+      <category term="AWS, VPN" scheme="https://tshst.github.io/tags/AWS-VPN/"/>
+    
+  </entry>
   
   <entry>
     <title>ブログ環境構築</title>

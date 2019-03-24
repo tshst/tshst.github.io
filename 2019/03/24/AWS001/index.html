@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="tshst&#39;s Daily Output">
-    <title>ブログ環境構築 - tshst&#39;s Daily Output</title>
+    <title>AWSのVPNでBGPがうまく反映されない - tshst&#39;s Daily Output</title>
     <meta name="author" content="tshst">
     
         <meta name="keywords" content="infrastructure,docker,AWS,ansible,python,">
@@ -15,19 +15,21 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"articleBody":"リサーチ\n無料のブログサービス(wordpress, tumblr, Blogger, etc…)\n静的ジェネレータ(Pelican, hugo, hexo)\nなんだかんだで静的ジェネレータが記事を書くうえでも、Markdownなので便利\n\nはじめは、HUGO\nGo製で高速\nテーマも好きなものがあった\nただ、設定のカスタマイズがものすごくわかりずらく、断念\n\n最終的にHEXO\n設定が簡単で理解しやすい\n\n毎日何かアウトプットする\n3日坊主にならないようにする\n可能な限り技術ネタ\n\n","dateCreated":"2019-03-22T00:54:20+09:00","dateModified":"2019-03-22T01:07:36+09:00","datePublished":"2019-03-22T00:54:20+09:00","description":"","headline":"ブログ環境構築","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://tshst.github.io/2019/03/22/ブログ環境構築/"},"publisher":{"@type":"Organization","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"url":"https://tshst.github.io/2019/03/22/ブログ環境構築/","keywords":"hexo"}</script>
-    <meta name="description" content="リサーチ 無料のブログサービス(wordpress, tumblr, Blogger, etc…) 静的ジェネレータ(Pelican, hugo, hexo) なんだかんだで静的ジェネレータが記事を書くうえでも、Markdownなので便利  はじめは、HUGO Go製で高速 テーマも好きなものがあった ただ、設定のカスタマイズがものすごくわかりずらく、断念  最終的にHEXO 設定が簡単で理解しや">
-<meta name="keywords" content="hexo">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"articleBody":"ネットワークの構成(簡略)\n拠点が2箇所あり、拠点にはルーターとして、RTX1210がある\nAWSは東京リージョンとバージニアリージョンの2箇所を使用している\n各拠点からsite-to-siteのVPNで各リージョンに接続している\nYamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している\n\n\n問題\n各拠点からVPNで各リージョンに接続したいと考えているが問題が発生している\n東京リージョンのインスタンスからa.a.a.a/24に対して疎通できない\n\n切り分け\nバージニアリージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはA.A.A.Aとなり、問題なく到達する\nバージニアリージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する\n東京リージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはC.C.C.Cとなる\n東京リージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する\nYAMAHA側でBGPのステータスを確認したところ、正常\n\nBGPのルーティングに絞ってリサーチ\n上記からおそらくVGWのルーティングに問題がある\nしかし、VGWのルーティング情報は参照できない。。。\n\nBGP周りの情報\n同じネットワークの場合、マスクの大きさによってルーティングに影響がでる\nAWSでｎVPNを構築する際の考え方等\nVGWのルーティング情報に関する話\n\n対応\nとりあえず、切り分けとして、VGWを作り直して見た\n作り直したところ、問題なく繋がるようになった\nこうなると再現性がないので、原因特定が難しい\n再発したら、AWSに問い合わせて調査してもらうようにしよう\n\n","dateCreated":"2019-03-24T10:50:50+09:00","dateModified":"2019-03-24T15:09:24+09:00","datePublished":"2019-03-24T10:50:50+09:00","description":"","headline":"AWSのVPNでBGPがうまく反映されない","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://tshst.github.io/2019/03/24/AWS001/"},"publisher":{"@type":"Organization","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"url":"https://tshst.github.io/2019/03/24/AWS001/","keywords":"AWS, VPN"}</script>
+    <meta name="description" content="ネットワークの構成(簡略) 拠点が2箇所あり、拠点にはルーターとして、RTX1210がある AWSは東京リージョンとバージニアリージョンの2箇所を使用している 各拠点からsite-to-siteのVPNで各リージョンに接続している Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している   問題 各拠点からVPNで各リージョンに接続したいと">
+<meta name="keywords" content="AWS, VPN">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="ブログ環境構築">
-<meta property="og:url" content="https://tshst.github.io/2019/03/22/ブログ環境構築/index.html">
+<meta property="og:title" content="AWSのVPNでBGPがうまく反映されない">
+<meta property="og:url" content="https://tshst.github.io/2019/03/24/AWS001/index.html">
 <meta property="og:site_name" content="tshst&#39;s Daily Output">
-<meta property="og:description" content="リサーチ 無料のブログサービス(wordpress, tumblr, Blogger, etc…) 静的ジェネレータ(Pelican, hugo, hexo) なんだかんだで静的ジェネレータが記事を書くうえでも、Markdownなので便利  はじめは、HUGO Go製で高速 テーマも好きなものがあった ただ、設定のカスタマイズがものすごくわかりずらく、断念  最終的にHEXO 設定が簡単で理解しや">
+<meta property="og:description" content="ネットワークの構成(簡略) 拠点が2箇所あり、拠点にはルーターとして、RTX1210がある AWSは東京リージョンとバージニアリージョンの2箇所を使用している 各拠点からsite-to-siteのVPNで各リージョンに接続している Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している   問題 各拠点からVPNで各リージョンに接続したいと">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2019-03-21T16:07:36.036Z">
+<meta property="og:image" content="https://tshst.github.io/2019/03/24/AWS001/aws-vpn-network-diagram.png">
+<meta property="og:updated_time" content="2019-03-24T06:09:24.990Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ブログ環境構築">
-<meta name="twitter:description" content="リサーチ 無料のブログサービス(wordpress, tumblr, Blogger, etc…) 静的ジェネレータ(Pelican, hugo, hexo) なんだかんだで静的ジェネレータが記事を書くうえでも、Markdownなので便利  はじめは、HUGO Go製で高速 テーマも好きなものがあった ただ、設定のカスタマイズがものすごくわかりずらく、断念  最終的にHEXO 設定が簡単で理解しや">
+<meta name="twitter:title" content="AWSのVPNでBGPがうまく反映されない">
+<meta name="twitter:description" content="ネットワークの構成(簡略) 拠点が2箇所あり、拠点にはルーターとして、RTX1210がある AWSは東京リージョンとバージニアリージョンの2箇所を使用している 各拠点からsite-to-siteのVPNで各リージョンに接続している Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している   問題 各拠点からVPNで各リージョンに接続したいと">
+<meta name="twitter:image" content="https://tshst.github.io/2019/03/24/AWS001/aws-vpn-network-diagram.png">
     
     
         
@@ -189,14 +191,14 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            ブログ環境構築
+            AWSのVPNでBGPがうまく反映されない
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2019-03-22T00:54:20+09:00">
+    <time datetime="2019-03-24T10:50:50+09:00">
 	
-		    2019/03/22
+		    2019/03/24
     	
     </time>
     
@@ -208,22 +210,38 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h2 id="リサーチ"><a href="#リサーチ" class="headerlink" title="リサーチ"></a>リサーチ</h2><ul>
-<li>無料のブログサービス(wordpress, tumblr, Blogger, etc…)</li>
-<li>静的ジェネレータ(Pelican, hugo, hexo)</li>
-<li>なんだかんだで静的ジェネレータが記事を書くうえでも、Markdownなので便利</li>
+            <h2 id="ネットワークの構成-簡略"><a href="#ネットワークの構成-簡略" class="headerlink" title="ネットワークの構成(簡略)"></a>ネットワークの構成(簡略)</h2><ul>
+<li>拠点が2箇所あり、拠点にはルーターとして、RTX1210がある</li>
+<li>AWSは東京リージョンとバージニアリージョンの2箇所を使用している</li>
+<li>各拠点からsite-to-siteのVPNで各リージョンに接続している</li>
+<li>Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している</li>
 </ul>
-<h2 id="はじめは、HUGO"><a href="#はじめは、HUGO" class="headerlink" title="はじめは、HUGO"></a>はじめは、HUGO</h2><ul>
-<li>Go製で高速</li>
-<li>テーマも好きなものがあった</li>
-<li>ただ、設定のカスタマイズがものすごくわかりずらく、断念</li>
+<img src="/2019/03/24/AWS001/aws-vpn-network-diagram.png" title="構成図">
+<h2 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h2><ul>
+<li>各拠点からVPNで各リージョンに接続したいと考えているが問題が発生している</li>
+<li>東京リージョンのインスタンスからa.a.a.a/24に対して疎通できない</li>
 </ul>
-<h2 id="最終的にHEXO"><a href="#最終的にHEXO" class="headerlink" title="最終的にHEXO"></a>最終的にHEXO</h2><ul>
-<li>設定が簡単で理解しやすい</li>
+<h2 id="切り分け"><a href="#切り分け" class="headerlink" title="切り分け"></a>切り分け</h2><ul>
+<li>バージニアリージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはA.A.A.Aとなり、問題なく到達する</li>
+<li>バージニアリージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する</li>
+<li>東京リージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはC.C.C.Cとなる</li>
+<li>東京リージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する</li>
+<li>YAMAHA側でBGPのステータスを確認したところ、正常</li>
 </ul>
-<h2 id="毎日何かアウトプットする"><a href="#毎日何かアウトプットする" class="headerlink" title="毎日何かアウトプットする"></a>毎日何かアウトプットする</h2><ul>
-<li>3日坊主にならないようにする</li>
-<li>可能な限り技術ネタ</li>
+<h3 id="BGPのルーティングに絞ってリサーチ"><a href="#BGPのルーティングに絞ってリサーチ" class="headerlink" title="BGPのルーティングに絞ってリサーチ"></a>BGPのルーティングに絞ってリサーチ</h3><ul>
+<li>上記からおそらくVGWのルーティングに問題がある</li>
+<li>しかし、VGWのルーティング情報は参照できない。。。</li>
+</ul>
+<h2 id="BGP周りの情報"><a href="#BGP周りの情報" class="headerlink" title="BGP周りの情報"></a>BGP周りの情報</h2><ul>
+<li><a href="https://dev.classmethod.jp/cloud/aws/add-vpc-cidr-with-vpn/" target="_blank" rel="noopener">同じネットワークの場合、マスクの大きさによってルーティングに影響がでる</a></li>
+<li><a href="https://www.slideshare.net/skikuchi/akibaaws-vpn" target="_blank" rel="noopener">AWSでｎVPNを構築する際の考え方等</a></li>
+<li><a href="https://www.slideshare.net/skikuchi/akibaaws-vgw" target="_blank" rel="noopener">VGWのルーティング情報に関する話</a></li>
+</ul>
+<h2 id="対応"><a href="#対応" class="headerlink" title="対応"></a>対応</h2><ul>
+<li>とりあえず、切り分けとして、VGWを作り直して見た</li>
+<li>作り直したところ、問題なく繋がるようになった</li>
+<li>こうなると再現性がないので、原因特定が難しい</li>
+<li>再発したら、AWSに問い合わせて調査してもらうようにしよう</li>
 </ul>
 
             
@@ -235,7 +253,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">タグ</span><br>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/hexo/">hexo</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/AWS-VPN/">AWS, VPN</a>
 
             </div>
         
@@ -245,8 +263,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/24/AWS001/" data-tooltip="AWSのVPNでBGPがうまく反映されない" aria-label="前: AWSのVPNでBGPがうまく反映されない">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">前</span>
@@ -255,7 +272,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/21/hello-world/" data-tooltip="Hello World" aria-label="次: Hello World">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/22/ブログ環境構築/" data-tooltip="ブログ環境構築" aria-label="次: ブログ環境構築">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">次</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -273,7 +290,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tshst.github.io/2019/03/22/ブログ環境構築/" title="Facebookで共有">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tshst.github.io/2019/03/24/AWS001/" title="Facebookで共有">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -281,7 +298,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://tshst.github.io/2019/03/22/ブログ環境構築/" title="Twitterで共有">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://tshst.github.io/2019/03/24/AWS001/" title="Twitterで共有">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
             </li>
@@ -289,7 +306,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://tshst.github.io/2019/03/22/ブログ環境構築/" title="Google+で共有">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://tshst.github.io/2019/03/24/AWS001/" title="Google+で共有">
                     <i class="fab fa-google-plus" aria-hidden="true"></i>
                 </a>
             </li>
@@ -331,8 +348,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/24/AWS001/" data-tooltip="AWSのVPNでBGPがうまく反映されない" aria-label="前: AWSのVPNでBGPがうまく反映されない">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">前</span>
@@ -341,7 +357,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/21/hello-world/" data-tooltip="Hello World" aria-label="次: Hello World">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/22/ブログ環境構築/" data-tooltip="ブログ環境構築" aria-label="次: ブログ環境構築">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">次</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -359,7 +375,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tshst.github.io/2019/03/22/ブログ環境構築/" title="Facebookで共有">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tshst.github.io/2019/03/24/AWS001/" title="Facebookで共有">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -367,7 +383,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://tshst.github.io/2019/03/22/ブログ環境構築/" title="Twitterで共有">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://tshst.github.io/2019/03/24/AWS001/" title="Twitterで共有">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
             </li>
@@ -375,7 +391,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://tshst.github.io/2019/03/22/ブログ環境構築/" title="Google+で共有">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://tshst.github.io/2019/03/24/AWS001/" title="Google+で共有">
                     <i class="fab fa-google-plus" aria-hidden="true"></i>
                 </a>
             </li>
@@ -403,7 +419,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tshst.github.io/2019/03/22/ブログ環境構築/">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://tshst.github.io/2019/03/24/AWS001/">
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Facebookで共有</span>
                     </a>
                 </li>
@@ -411,7 +427,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://tshst.github.io/2019/03/22/ブログ環境構築/">
+                    <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://tshst.github.io/2019/03/24/AWS001/">
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Twitterで共有</span>
                     </a>
                 </li>
@@ -419,7 +435,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://tshst.github.io/2019/03/22/ブログ環境構築/">
+                    <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://tshst.github.io/2019/03/24/AWS001/">
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Google+で共有</span>
                     </a>
                 </li>
