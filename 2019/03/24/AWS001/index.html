@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="tshst&#39;s Daily Output">
-    <title>AWSのVPNでBGPがうまく反映されない - tshst&#39;s Daily Output</title>
+    <title>AWSのVPNでBGPがうまく動いていない気がする - tshst&#39;s Daily Output</title>
     <meta name="author" content="tshst">
     
         <meta name="keywords" content="infrastructure,docker,AWS,ansible,python,">
@@ -15,19 +15,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"articleBody":"ネットワークの構成(簡略)\n拠点が2箇所あり、拠点にはルーターとして、RTX1210がある\nAWSは東京リージョンとバージニアリージョンの2箇所を使用している\n各拠点からsite-to-siteのVPNで各リージョンに接続している\nYamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している\n\n\n問題\n各拠点からVPNで各リージョンに接続したいと考えているが問題が発生している\n東京リージョンのインスタンスからa.a.a.a/24に対して疎通できない\n\n切り分け\nバージニアリージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはA.A.A.Aとなり、問題なく到達する\nバージニアリージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する\n東京リージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはC.C.C.Cとなる\n東京リージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する\nYAMAHA側でBGPのステータスを確認したところ、正常\n\nBGPのルーティングに絞ってリサーチ\n上記からおそらくVGWのルーティングに問題がある\nしかし、VGWのルーティング情報は参照できない。。。\n\nBGP周りの情報\n同じネットワークの場合、マスクの大きさによってルーティングに影響がでる\nAWSでｎVPNを構築する際の考え方等\nVGWのルーティング情報に関する話\n\n対応\nとりあえず、切り分けとして、VGWを作り直して見た\n作り直したところ、問題なく繋がるようになった\nこうなると再現性がないので、原因特定が難しい\n再発したら、AWSに問い合わせて調査してもらうようにしよう\n\n","dateCreated":"2019-03-24T10:50:50+09:00","dateModified":"2019-03-24T15:09:24+09:00","datePublished":"2019-03-24T10:50:50+09:00","description":"","headline":"AWSのVPNでBGPがうまく反映されない","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://tshst.github.io/2019/03/24/AWS001/"},"publisher":{"@type":"Organization","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"url":"https://tshst.github.io/2019/03/24/AWS001/","keywords":"AWS, VPN"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"articleBody":"ネットワークの構成(簡略)\n拠点が2箇所あり、拠点にはルーターとして、RTX1210がある\nAWSは東京リージョンとバージニアリージョンの2箇所を使用している\n各拠点からsite-to-siteのVPNで各リージョンに接続している\nYamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している\n\n\n問題\n各拠点からVPNで各リージョンに接続したいと考えているが問題が発生している\n東京リージョンのインスタンスからa.a.a.a/24に対して疎通できない\n\n切り分け\nバージニアリージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはA.A.A.Aとなり、問題なく到達する\nバージニアリージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する\n東京リージョンのインスタンスからa.a.a.a/24に対してtraceすると、1個目のIPはC.C.C.Cとなる\n東京リージョンのインスタンスからc.c.c.c/24に対してtraceすると、1個目のIPはC.C.C.Cとなり、問題なく到達する\nYAMAHA側でBGPのステータスを確認したところ、正常\n\nBGPのルーティングに絞ってリサーチ\n上記からおそらくVGWのルーティングに問題がある\nしかし、VGWのルーティング情報は参照できない。。。\n\nBGP周りの情報\n同じネットワークの場合、マスクの大きさによってルーティングに影響がでる\nAWSでｎVPNを構築する際の考え方等\nVGWのルーティング情報に関する話\n\n対応\nとりあえず、切り分けとして、VGWを作り直して見た\n作り直したところ、問題なく繋がるようになった\nこうなると再現性がないので、原因特定が難しい\n再発したら、AWSに問い合わせて調査してもらうようにしよう\n\n","dateCreated":"2019-03-24T10:50:50+09:00","dateModified":"2019-03-24T15:11:35+09:00","datePublished":"2019-03-24T10:50:50+09:00","description":"","headline":"AWSのVPNでBGPがうまく動いていない気がする","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://tshst.github.io/2019/03/24/AWS001/"},"publisher":{"@type":"Organization","name":"tshst","sameAs":["https://github.com/tshst","https://twitter.com/tshst_","https://www.linkedin.com/in/tshst"]},"url":"https://tshst.github.io/2019/03/24/AWS001/","keywords":"AWS, VPN"}</script>
     <meta name="description" content="ネットワークの構成(簡略) 拠点が2箇所あり、拠点にはルーターとして、RTX1210がある AWSは東京リージョンとバージニアリージョンの2箇所を使用している 各拠点からsite-to-siteのVPNで各リージョンに接続している Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している   問題 各拠点からVPNで各リージョンに接続したいと">
 <meta name="keywords" content="AWS, VPN">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="AWSのVPNでBGPがうまく反映されない">
+<meta property="og:title" content="AWSのVPNでBGPがうまく動いていない気がする">
 <meta property="og:url" content="https://tshst.github.io/2019/03/24/AWS001/index.html">
 <meta property="og:site_name" content="tshst&#39;s Daily Output">
 <meta property="og:description" content="ネットワークの構成(簡略) 拠点が2箇所あり、拠点にはルーターとして、RTX1210がある AWSは東京リージョンとバージニアリージョンの2箇所を使用している 各拠点からsite-to-siteのVPNで各リージョンに接続している Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している   問題 各拠点からVPNで各リージョンに接続したいと">
 <meta property="og:locale" content="ja">
 <meta property="og:image" content="https://tshst.github.io/2019/03/24/AWS001/aws-vpn-network-diagram.png">
-<meta property="og:updated_time" content="2019-03-24T06:09:24.990Z">
+<meta property="og:updated_time" content="2019-03-24T06:11:35.095Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AWSのVPNでBGPがうまく反映されない">
+<meta name="twitter:title" content="AWSのVPNでBGPがうまく動いていない気がする">
 <meta name="twitter:description" content="ネットワークの構成(簡略) 拠点が2箇所あり、拠点にはルーターとして、RTX1210がある AWSは東京リージョンとバージニアリージョンの2箇所を使用している 各拠点からsite-to-siteのVPNで各リージョンに接続している Yamaha - VGW(virtual gate way)のネットワークのルーティングは、BGPを使用している   問題 各拠点からVPNで各リージョンに接続したいと">
 <meta name="twitter:image" content="https://tshst.github.io/2019/03/24/AWS001/aws-vpn-network-diagram.png">
     
@@ -191,7 +191,7 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            AWSのVPNでBGPがうまく反映されない
+            AWSのVPNでBGPがうまく動いていない気がする
         </h1>
     
     
